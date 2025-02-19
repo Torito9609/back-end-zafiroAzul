@@ -1,0 +1,53 @@
+package com.proyectofinal.backend_zafiro_azul.service;
+
+import com.proyectofinal.backend_zafiro_azul.model.Producto;
+import com.proyectofinal.backend_zafiro_azul.model.Usuario;
+import com.proyectofinal.backend_zafiro_azul.repository.IUsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class UsuarioService implements IUsuarioService {
+
+    @Autowired
+    private IUsuarioRepository usuarioRepository;
+
+    @Override
+    public List<Usuario> getAllUsuarios() {
+        return usuarioRepository.findAll();
+    }
+
+    @Override
+    public void createUsuario(Usuario usuario) {
+        usuarioRepository.save(usuario);
+    }
+
+    @Override
+    public void deleteUsuario(Long idUsuario) {
+        usuarioRepository.deleteById(idUsuario);
+    }
+
+    @Override
+    public Usuario findUsuario(Long idUsuario) {
+        Usuario usuario = usuarioRepository.findById(idUsuario).orElse(null);
+        return usuario;
+    }
+
+    @Override
+    public void updateUsuario(Long idUsuarioToUpdate, Usuario usuarioUpdated) {
+        Usuario usuarioToUpdate = usuarioRepository.findById(idUsuarioToUpdate).orElse(null);
+
+        if (usuarioToUpdate != null) {
+
+            usuarioToUpdate.setNombreUsuario(usuarioUpdated.getNombreUsuario());
+            usuarioToUpdate.setTelefonoUsuario(usuarioUpdated.getTelefonoUsuario());
+            usuarioToUpdate.setCorreoUsuario(usuarioUpdated.getCorreoUsuario());
+            usuarioToUpdate.setDireccionUsuario(usuarioUpdated.getDireccionUsuario());
+            usuarioToUpdate.setPasswordHash(usuarioUpdated.getPasswordHash());
+
+            usuarioRepository.save(usuarioToUpdate);
+        }
+    }
+}
