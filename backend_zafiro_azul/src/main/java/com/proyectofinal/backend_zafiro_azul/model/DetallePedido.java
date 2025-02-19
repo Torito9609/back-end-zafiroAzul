@@ -1,9 +1,6 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -14,8 +11,11 @@ public class DetallePedido {
     Long idDetalle;
     Long idPedido;
     Long idVariante;
+    @Column(nullable = false)
     Integer cantidadVariante;
+    @Column(nullable = false, precision = 10, scale = 2)
     BigDecimal precioUnitario;
+    @Column(nullable = false, precision = 10, scale = 2)
     BigDecimal subTotal;
 
     public DetallePedido(Long idDetalle, Long idPedido, Long idVariante, Integer cantidadVariante, BigDecimal precioUnitario, BigDecimal subTotal) {

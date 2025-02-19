@@ -1,9 +1,6 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class Usuario {
@@ -12,11 +9,17 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
 
     private Long idUsuario;
+    @Column(nullable = false)
     private String nombreUsuario;
+    @Column(nullable = false)
     private String telefonoUsuario;
+    @Column(nullable = false)
     private String correoUsuario;
+    @Column(nullable = false)
     private String direccionUsuario;
+    @Column(nullable = false)
     private String passwordHash;
+    @Column(nullable = false)
     private String passwordSalt;
 
     public Usuario(String correoUsuario, String direccionUsuario, Long idUsuario, String nombreUsuario, String passwordHash, String passwordSalt, String telefonoUsuario) {

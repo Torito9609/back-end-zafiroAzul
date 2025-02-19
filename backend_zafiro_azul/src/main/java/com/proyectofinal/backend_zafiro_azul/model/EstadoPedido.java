@@ -1,15 +1,13 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class EstadoPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long idEstado;
+    @Column(nullable = false)
     String nombreEstado;
 
     public EstadoPedido(Long idEstado, String nombreEstado) {

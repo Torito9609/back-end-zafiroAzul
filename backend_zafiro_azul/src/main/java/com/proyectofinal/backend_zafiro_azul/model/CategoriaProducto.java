@@ -1,16 +1,15 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 public class CategoriaProducto {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long idCategoria;
+    @Column(nullable = false)
     String nombreCategoria;
+    @Column(nullable = false)
     String descripcionCategoria;
 
     public CategoriaProducto(Long idCategoria, String nombreCategoria, String descripcionCategoria) {

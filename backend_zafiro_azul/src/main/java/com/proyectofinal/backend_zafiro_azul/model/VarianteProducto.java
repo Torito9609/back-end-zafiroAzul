@@ -1,10 +1,7 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -13,16 +10,20 @@ public class VarianteProducto {
     @Id
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private Long idVariante;
+    @Column(nullable = false)
     private Long idProducto;
-    private String tamañoVariante;
+    @Column(name = "TAMANO_VARIANTE", nullable = false)
+    private String tamanoVariante;
+    @Column(nullable = false)
     private BigDecimal precioVariante;
+    @Column(nullable = false)
     private int stockVariante;
 
 
-    public VarianteProducto(Long idVariante, Long idProducto, String tamañoVariante, BigDecimal precioVariante, int stockVariante) {
+    public VarianteProducto(Long idVariante, Long idProducto, String tamanoVariante, BigDecimal precioVariante, int stockVariante) {
         this.idVariante = idVariante;
         this.idProducto = idProducto;
-        this.tamañoVariante = tamañoVariante;
+        this.tamanoVariante = tamanoVariante;
         this.precioVariante = precioVariante;
         this.stockVariante = stockVariante;
     }
@@ -46,12 +47,12 @@ public class VarianteProducto {
         this.idProducto = idProducto;
     }
 
-    public String getTamañoVariante() {
-        return tamañoVariante;
+    public String getTamanoVariante() {
+        return tamanoVariante;
     }
 
-    public void setTamañoVariante(String tamañoVariante) {
-        this.tamañoVariante = tamañoVariante;
+    public void setTamanoVariante(String tamanoVariante) {
+        this.tamanoVariante = tamanoVariante;
     }
 
     public BigDecimal getPrecioVariante() {

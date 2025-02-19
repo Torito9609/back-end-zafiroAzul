@@ -1,6 +1,6 @@
 package com.proyectofinal.backend_zafiro_azul.service;
 
-import com.proyectofinal.backend_zafiro_azul.model.Usuario_temporal;
+import com.proyectofinal.backend_zafiro_azul.model.UsuarioTemporal;
 import com.proyectofinal.backend_zafiro_azul.repository.IUsuario_TemporalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +15,14 @@ public class Usuario_TemporalService implements Iusuario_TemporalService{
 
 
     @Override
-    public List<Usuario_temporal> getUsuario_Temporal() {
-        List<Usuario_temporal>ListaUsuarioTemporal =
+    public List<UsuarioTemporal> getUsuario_Temporal() {
+        List<UsuarioTemporal>ListaUsuarioTemporal =
                 iUsuarioTemporalRepository.findAll();
         return ListaUsuarioTemporal;
     }
 
     @Override
-    public void saveUsuario_Temporal(Usuario_temporal tempo) {
+    public void saveUsuario_Temporal(UsuarioTemporal tempo) {
         iUsuarioTemporalRepository.save(tempo);
 
     }
@@ -33,23 +33,23 @@ public class Usuario_TemporalService implements Iusuario_TemporalService{
     }
 
     @Override
-    public Usuario_temporal findUsuario_Temporal(long id) {
-        Usuario_temporal tempo =
+    public UsuarioTemporal findUsuario_Temporal(long id) {
+        UsuarioTemporal tempo =
         iUsuarioTemporalRepository.findById(id).orElse(null);
         return tempo;
     }
 
     @Override
-    public void editUsuario_Temporal(Long id, Usuario_temporal UsuarioTemporalActualizado) {
-        Usuario_temporal temporalExistente =
+    public void editUsuario_Temporal(Long id, UsuarioTemporal UsuarioTemporalActualizado) {
+        UsuarioTemporal temporalExistente =
                 iUsuarioTemporalRepository.findById(id).orElse(null);
 
         if (temporalExistente != null) {
 
-            temporalExistente.setNombre_Usuario_Temp(UsuarioTemporalActualizado.getNombre_Usuario_Temp());
-            temporalExistente.setCorreo_Usuario_Temp(UsuarioTemporalActualizado.getCorreo_Usuario_Temp());
-            temporalExistente.setTelefono_Usuario_Temp(UsuarioTemporalActualizado.getTelefono_Usuario_Temp());
-            temporalExistente.setDireccio_Usuario_Temp(UsuarioTemporalActualizado.getDireccio_Usuario_Temp());
+            temporalExistente.setNombreUsuarioTemp(UsuarioTemporalActualizado.getNombreUsuarioTemp());
+            temporalExistente.setCorreoUsuarioTemp(UsuarioTemporalActualizado.getCorreoUsuarioTemp());
+            temporalExistente.setTelefonoUsuarioTemp(UsuarioTemporalActualizado.getTelefonoUsuarioTemp());
+            temporalExistente.setDireccionUsuarioTemp(UsuarioTemporalActualizado.getDireccionUsuarioTemp());
 
             iUsuarioTemporalRepository.save(temporalExistente);
         }else{
