@@ -5,6 +5,7 @@ import com.proyectofinal.backend_zafiro_azul.model.CategoriaProducto;
 import java.util.List;
 
 public interface ICategoriaProductoService {
+
     public List<CategoriaProducto> getAllCategoriaProducto();
 
     public void saveCategoriaProducto(CategoriaProducto categoriaProducto);
