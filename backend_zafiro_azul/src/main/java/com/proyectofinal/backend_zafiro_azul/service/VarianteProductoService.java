@@ -39,8 +39,10 @@ public class VarianteProductoService implements IvarianteProductoService{
             System.out.println("No se encontro la variante");
         }else{
             varianteActualizar.setTamanoVariante(varianteDetails.getTamanoVariante());
-            varianteActualizar.setPrecioVariante(varianteActualizar.getPrecioVariante());
-            varianteActualizar.setStockVariante(varianteActualizar.getStockVariante());
+            varianteActualizar.setPrecioVariante(varianteDetails.getPrecioVariante());
+            varianteActualizar.setStockVariante(varianteDetails.getStockVariante());
+
+            ivarianteProductoRepository.save(varianteActualizar);
 
         }
 

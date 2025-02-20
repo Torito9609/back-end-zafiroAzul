@@ -22,8 +22,8 @@ public class Usuario_TemporalService implements Iusuario_TemporalService{
     }
 
     @Override
-    public void saveUsuario_Temporal(UsuarioTemporal tempo) {
-        iUsuarioTemporalRepository.save(tempo);
+    public void saveUsuario_Temporal(UsuarioTemporal usuarioTemporal) {
+        iUsuarioTemporalRepository.save(usuarioTemporal);
 
     }
 

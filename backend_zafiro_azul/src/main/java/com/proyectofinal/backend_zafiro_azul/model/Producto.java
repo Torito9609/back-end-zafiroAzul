@@ -34,7 +34,8 @@ public class Producto {
         this.nombreProducto = nombreProducto;
     }
 
-    public Producto() {
+    public Producto(){
+
     }
 
     public Long getIdProducto() {

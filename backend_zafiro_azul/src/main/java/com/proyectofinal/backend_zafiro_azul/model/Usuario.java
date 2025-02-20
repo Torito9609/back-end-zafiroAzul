@@ -53,6 +53,10 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(){
+
+    }
+
     public String getCorreoUsuario() {
         return correoUsuario;
     }
