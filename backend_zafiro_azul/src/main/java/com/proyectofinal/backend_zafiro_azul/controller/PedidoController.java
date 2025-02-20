@@ -36,7 +36,7 @@ public class PedidoController {
     }
 
     //Endpoint para borrar un pedido
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public String deletePedido(@PathVariable Long id){
         pedidoService.deletePedido(id);
         return "El pedido ha sido eliminado";
