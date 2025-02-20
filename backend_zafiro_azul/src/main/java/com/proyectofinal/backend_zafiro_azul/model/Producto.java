@@ -20,6 +20,10 @@ public class Producto {
         this.nombreProducto = nombreProducto;
     }
 
+    public Producto(){
+
+    }
+
     public Long getIdProducto() {
         return idProducto;
     }
