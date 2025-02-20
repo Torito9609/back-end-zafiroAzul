@@ -47,7 +47,7 @@ public class UsuarioController {
     }
 
     //Eliminar un usuario
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteUsuario(@PathVariable Long id) {
         Usuario usuarioExistente = usuarioService.findUsuario(id);
         if (usuarioExistente != null) {
