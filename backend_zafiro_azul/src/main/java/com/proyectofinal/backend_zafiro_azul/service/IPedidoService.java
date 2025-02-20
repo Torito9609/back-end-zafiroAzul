@@ -15,4 +15,6 @@ public interface IPedidoService {
     Pedido findPedido(Long idPedido);
 
     void updatePedido(Long idPedidoToUpdate, Pedido pedidoUpdated);
+
+    void validarPedido(Pedido pedido);
 }

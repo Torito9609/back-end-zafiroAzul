@@ -2,23 +2,31 @@ package com.proyectofinal.backend_zafiro_azul.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class UsuarioTemporal {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idUsuarioTemp;
+
     @Column(nullable = false)
     private String nombreUsuarioTemp;
+
     @Column(nullable = false)
     private String correoUsuarioTemp;
+
     @Column(nullable = false)
     private String telefonoUsuarioTemp;
+
     @Column(nullable = false)
     private String direccionUsuarioTemp;
 
+    @OneToMany(mappedBy = "usuarioTemp", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos;
 
-    public UsuarioTemporal(Long id_Usuario_Temp, String nombre_Usuario_Temp, String correo_Usuario_Temp, String telefono_Usuario_Temp, String direccion_Usuario_Temp) {
-        idUsuarioTemp = id_Usuario_Temp;
+
+    public UsuarioTemporal(String nombre_Usuario_Temp, String correo_Usuario_Temp, String telefono_Usuario_Temp, String direccion_Usuario_Temp) {
         nombreUsuarioTemp = nombre_Usuario_Temp;
         correoUsuarioTemp = correo_Usuario_Temp;
         telefonoUsuarioTemp = telefono_Usuario_Temp;
@@ -27,7 +35,6 @@ public class UsuarioTemporal {
 
     public UsuarioTemporal() {
     }
-
 
     public Long getIdUsuarioTemp() {
         return idUsuarioTemp;
@@ -67,5 +74,13 @@ public class UsuarioTemporal {
 
     public void setDireccionUsuarioTemp(String direccionUsuarioTemp) {
         this.direccionUsuarioTemp = direccionUsuarioTemp;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 }

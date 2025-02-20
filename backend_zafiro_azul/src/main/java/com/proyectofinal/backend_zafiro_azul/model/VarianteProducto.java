@@ -4,25 +4,34 @@ package com.proyectofinal.backend_zafiro_azul.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 public class VarianteProducto {
     @Id
     @GeneratedValue (strategy = GenerationType.SEQUENCE)
     private Long idVariante;
-    @Column(nullable = false)
-    private Long idProducto;
+
+    @ManyToOne
+    @JoinColumn(name = "idProducto", nullable = false)
+    private Producto producto;
+
     @Column(name = "TAMANO_VARIANTE", nullable = false)
     private String tamanoVariante;
+
     @Column(nullable = false)
     private BigDecimal precioVariante;
+
     @Column(nullable = false)
     private int stockVariante;
 
+    @OneToMany(mappedBy = "varianteProducto")
+    private List<DetallePedido> detallePedidos;
 
-    public VarianteProducto(Long idVariante, Long idProducto, String tamanoVariante, BigDecimal precioVariante, int stockVariante) {
+
+    public VarianteProducto(Long idVariante, Producto producto, String tamanoVariante, BigDecimal precioVariante, int stockVariante) {
         this.idVariante = idVariante;
-        this.idProducto = idProducto;
+        this.producto = producto;
         this.tamanoVariante = tamanoVariante;
         this.precioVariante = precioVariante;
         this.stockVariante = stockVariante;
@@ -39,12 +48,12 @@ public class VarianteProducto {
         this.idVariante = idVariante;
     }
 
-    public Long getIdProducto() {
-        return idProducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setIdProducto(Long idProducto) {
-        this.idProducto = idProducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public String getTamanoVariante() {
@@ -69,5 +78,13 @@ public class VarianteProducto {
 
     public void setStockVariante(int stockVariante) {
         this.stockVariante = stockVariante;
+    }
+
+    public List<DetallePedido> getDetallePedidos() {
+        return detallePedidos;
+    }
+
+    public void setVariantes(List<DetallePedido> detallePedidos) {
+        this.detallePedidos = detallePedidos;
     }
 }

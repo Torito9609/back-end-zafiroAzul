@@ -1,6 +1,7 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
 import jakarta.persistence.*;
+import org.aspectj.weaver.ast.Var;
 
 import java.math.BigDecimal;
 
@@ -8,20 +9,29 @@ import java.math.BigDecimal;
 public class DetallePedido {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long idDetalle;
-    Long idPedido;
-    Long idVariante;
-    @Column(nullable = false)
-    Integer cantidadVariante;
-    @Column(nullable = false, precision = 10, scale = 2)
-    BigDecimal precioUnitario;
-    @Column(nullable = false, precision = 10, scale = 2)
-    BigDecimal subTotal;
+    private Long idDetalle;
 
-    public DetallePedido(Long idDetalle, Long idPedido, Long idVariante, Integer cantidadVariante, BigDecimal precioUnitario, BigDecimal subTotal) {
+    @ManyToOne
+    @JoinColumn(name = "idPedido", nullable = false)
+    private Pedido pedido;
+
+    @ManyToOne
+    @JoinColumn(name = "idVariante", nullable = false)
+    private VarianteProducto varianteProducto;
+
+    @Column(nullable = false)
+    private Integer cantidadVariante;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioUnitario;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal subTotal;
+
+    public DetallePedido(Long idDetalle, Pedido pedido, VarianteProducto varianteProducto, Integer cantidadVariante, BigDecimal precioUnitario, BigDecimal subTotal) {
         this.idDetalle = idDetalle;
-        this.idPedido = idPedido;
-        this.idVariante = idVariante;
+        this.pedido = pedido;
+        this.varianteProducto = varianteProducto;
         this.cantidadVariante = cantidadVariante;
         this.precioUnitario = precioUnitario;
         this.subTotal = subTotal;
@@ -38,20 +48,20 @@ public class DetallePedido {
         this.idDetalle = idDetalle;
     }
 
-    public Long getIdPedido() {
-        return idPedido;
+    public Pedido getPedido() {
+        return pedido;
     }
 
-    public void setIdPedido(Long idPedido) {
-        this.idPedido = idPedido;
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
     }
 
-    public Long getIdVariante() {
-        return idVariante;
+    public VarianteProducto getIdVariante() {
+        return varianteProducto;
     }
 
-    public void setIdVariante(Long idVariante) {
-        this.idVariante = idVariante;
+    public void setIdVariante(VarianteProducto varianteProducto) {
+        this.varianteProducto = varianteProducto;
     }
 
     public Integer getCantidadVariante() {

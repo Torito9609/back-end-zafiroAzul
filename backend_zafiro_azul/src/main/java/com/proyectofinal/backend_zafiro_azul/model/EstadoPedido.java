@@ -2,13 +2,19 @@ package com.proyectofinal.backend_zafiro_azul.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class EstadoPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    Long idEstado;
+    private Long idEstado;
+
     @Column(nullable = false)
-    String nombreEstado;
+    private String nombreEstado;
+
+    @OneToMany(mappedBy = "estadoPedido", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos;
 
     public EstadoPedido(Long idEstado, String nombreEstado) {
         this.idEstado = idEstado;
@@ -32,5 +38,13 @@ public class EstadoPedido {
 
     public void setNombreEstado(String nombreEstado) {
         this.nombreEstado = nombreEstado;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 }

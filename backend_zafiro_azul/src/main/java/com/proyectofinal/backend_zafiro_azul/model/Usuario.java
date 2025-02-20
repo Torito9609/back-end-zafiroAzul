@@ -2,34 +2,55 @@ package com.proyectofinal.backend_zafiro_azul.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
-
     private Long idUsuario;
+
     @Column(nullable = false)
     private String nombreUsuario;
+
     @Column(nullable = false)
     private String telefonoUsuario;
+
     @Column(nullable = false)
     private String correoUsuario;
-    @Column(nullable = false)
+
+    @Column(nullable = true)
     private String direccionUsuario;
+
     @Column(nullable = false)
     private String passwordHash;
+
     @Column(nullable = false)
     private String passwordSalt;
 
-    public Usuario(String correoUsuario, String direccionUsuario, Long idUsuario, String nombreUsuario, String passwordHash, String passwordSalt, String telefonoUsuario) {
-        this.correoUsuario = correoUsuario;
-        this.direccionUsuario = direccionUsuario;
-        this.idUsuario = idUsuario;
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    private List<Pedido> pedidos;
+
+    public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String direccionUsuario, String passwordHash, String passwordSalt) {
         this.nombreUsuario = nombreUsuario;
+        this.correoUsuario = correoUsuario;
+        this.telefonoUsuario = telefonoUsuario;
+        this.direccionUsuario = direccionUsuario;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
+    }
+
+    public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String passwordHash, String passwordSalt) {
+        this.nombreUsuario = nombreUsuario;
+        this.correoUsuario = correoUsuario;
         this.telefonoUsuario = telefonoUsuario;
+        this.passwordHash = passwordHash;
+        this.passwordSalt = passwordSalt;
+        this.direccionUsuario = null;
+    }
+
+    public Usuario() {
     }
 
     public String getCorreoUsuario() {
@@ -86,5 +107,13 @@ public class Usuario {
 
     public void setTelefonoUsuario(String telefonoUsuario) {
         this.telefonoUsuario = telefonoUsuario;
+    }
+
+    public List<Pedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<Pedido> pedidos) {
+        this.pedidos = pedidos;
     }
 }

@@ -15,14 +15,13 @@ public class PedidoService implements IPedidoService{
 
     @Override
     public List<Pedido> getAllPedidos() {
-        List<Pedido> listaPedidos = pedidoRepository.findAll();
-        return listaPedidos;
+        return pedidoRepository.findAll();
     }
 
     @Override
     public void createPedido(Pedido pedido) {
+        validarPedido(pedido);
         pedidoRepository.save(pedido);
-
     }
 
     @Override
@@ -32,8 +31,7 @@ public class PedidoService implements IPedidoService{
 
     @Override
     public Pedido findPedido(Long idPedido) {
-        Pedido pedido = pedidoRepository.findById(idPedido).orElse(null);
-        return pedido;
+        return pedidoRepository.findById(idPedido).orElse(null);
     }
 
     @Override
@@ -44,6 +42,16 @@ public class PedidoService implements IPedidoService{
             pedidoToUpdate.setTotalPedido(pedidoUpdated.getTotalPedido());
 
             pedidoRepository.save(pedidoToUpdate);
+        }
+    }
+
+    @Override
+    public void validarPedido(Pedido pedido) {
+        if(pedido.getUsuario() != null && pedido.getUsuarioTemp() != null){
+            throw new IllegalArgumentException("El pedido no puede tener un usuario registrado y un usuario temporal al mismo tiempo.");
+        }
+        if(pedido.getUsuario() == null && pedido.getUsuarioTemp() == null){
+            throw new IllegalArgumentException("El pedido debe tener un usuario registrado o un usuario temporal.");
         }
     }
 }

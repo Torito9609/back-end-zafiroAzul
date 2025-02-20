@@ -6,29 +6,72 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Pedido {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long idPedido;
-    private Long idUsuario;
-    private Long idUsuarioTemp;
-    private Long idEstadoPedido;
+
+    @ManyToOne
+    @JoinColumn(name= "idUsuario")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "idUsuarioTemp")
+    private UsuarioTemporal usuarioTemp;
+
+    @ManyToOne
+    @JoinColumn(name = "idEstadoPedido", nullable = false)
+    private EstadoPedido estadoPedido;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false)
     private Date fechaPedido;
+
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal totalPedido;
 
-    public Pedido(Date fechaPedido, Long idPedido, Long idUsuario, Long idUsuarioTemp, Long idEstadoPedido, BigDecimal totalPedido) {
+    @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DetallePedido> pedidos;
+
+    public Pedido(Date fechaPedido, Usuario usuario, EstadoPedido estadoPedido, BigDecimal totalPedido) {
+        if (usuario == null) {
+            throw new IllegalArgumentException("El usuario registrado no puede ser nulo.");
+        }
         this.fechaPedido = fechaPedido;
-        this.idPedido = idPedido;
-        this.idUsuario = idUsuario;
-        this.idUsuarioTemp = idUsuarioTemp;
+        this.usuario = usuario;
+        this.estadoPedido = estadoPedido;
         this.totalPedido = totalPedido;
-        this.idEstadoPedido = idEstadoPedido;
+        this.usuarioTemp = null; // Asegurar que usuario temporal no se usa
     }
+
+    public Pedido(Date fechaPedido, UsuarioTemporal usuarioTemp, EstadoPedido estadoPedido, BigDecimal totalPedido) {
+        if (usuarioTemp == null) {
+            throw new IllegalArgumentException("El usuario temporal no puede ser nulo.");
+        }
+        this.fechaPedido = fechaPedido;
+        this.usuarioTemp = usuarioTemp;
+        this.estadoPedido = estadoPedido;
+        this.totalPedido = totalPedido;
+        this.usuario = null; // Asegurar que usuario registrado no se usa
+    }
+
+    public Pedido() {
+    }
+
+    @PrePersist
+    @PreUpdate
+    private void validarUsuario() {
+        if (usuario != null && usuarioTemp != null) {
+            throw new IllegalArgumentException("El pedido no puede tener un usuario registrado y un usuario temporal al mismo tiempo.");
+        }
+        if (usuario == null && usuarioTemp == null) {
+            throw new IllegalArgumentException("El pedido debe tener un usuario registrado o un usuario temporal.");
+        }
+    }
+
 
     public Date getFechaPedido() {return fechaPedido;}
 
@@ -44,25 +87,25 @@ public class Pedido {
         this.idPedido = idPedido;
     }
 
-    public Long getIdUsuario() {
-        return idUsuario;
+    public Usuario getUsuario() {
+        return usuario;
     }
 
-    public void setIdUsuario(Long idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
-    public Long getIdUsuarioTemp() {
-        return idUsuarioTemp;
+    public UsuarioTemporal getUsuarioTemp() {
+        return usuarioTemp;
     }
 
-    public void setIdUsuarioTemp(Long idUsuarioTemp) {
-        this.idUsuarioTemp = idUsuarioTemp;
+    public void setUsuarioTemp(UsuarioTemporal usuarioTemp) {
+        this.usuarioTemp = usuarioTemp;
     }
 
-    public Long getIdEstadoPedido(){return idEstadoPedido;}
+    public EstadoPedido getEstadoPedido(){return estadoPedido;}
 
-    private void setIdEstadoPedido(Long idEstado){this.idEstadoPedido = idEstado;}
+    private void setEstadoPedido(EstadoPedido estadoPedido){this.estadoPedido = estadoPedido;}
 
     public BigDecimal getTotalPedido() {
         return totalPedido;
@@ -70,5 +113,13 @@ public class Pedido {
 
     public void setTotalPedido(BigDecimal totalPedido) {
         this.totalPedido = totalPedido;
+    }
+
+    public List<DetallePedido> getPedidos() {
+        return pedidos;
+    }
+
+    public void setPedidos(List<DetallePedido> pedidos) {
+        this.pedidos = pedidos;
     }
 }

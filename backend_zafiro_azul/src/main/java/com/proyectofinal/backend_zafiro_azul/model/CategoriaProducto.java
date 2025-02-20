@@ -2,15 +2,22 @@ package com.proyectofinal.backend_zafiro_azul.model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class CategoriaProducto {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     Long idCategoria;
+
     @Column(nullable = false)
     String nombreCategoria;
+
     @Column(nullable = false)
     String descripcionCategoria;
+
+    @ManyToMany(mappedBy = "categorias", cascade = CascadeType.ALL)
+    private List<Producto> productos;
 
     public CategoriaProducto(Long idCategoria, String nombreCategoria, String descripcionCategoria) {
         this.idCategoria = idCategoria;
@@ -43,5 +50,13 @@ public class CategoriaProducto {
 
     public void setDescripcionCategoria(String descripcionCategoria) {
         this.descripcionCategoria = descripcionCategoria;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
     }
 }
