@@ -30,6 +30,10 @@ public class Pedido {
         this.idEstadoPedido = idEstadoPedido;
     }
 
+    public Pedido(){
+
+    }
+
     public Date getFechaPedido() {return fechaPedido;}
 
     public void setFechaPedido(Date fechaPedido) {

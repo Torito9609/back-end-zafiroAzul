@@ -32,6 +32,10 @@ public class Usuario {
         this.telefonoUsuario = telefonoUsuario;
     }
 
+    public Usuario(){
+
+    }
+
     public String getCorreoUsuario() {
         return correoUsuario;
     }
