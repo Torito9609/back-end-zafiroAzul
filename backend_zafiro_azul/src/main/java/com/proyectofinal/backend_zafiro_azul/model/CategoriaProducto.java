@@ -19,8 +19,7 @@ public class CategoriaProducto {
     @ManyToMany(mappedBy = "categorias", cascade = CascadeType.ALL)
     private List<Producto> productos;
 
-    public CategoriaProducto(Long idCategoria, String nombreCategoria, String descripcionCategoria) {
-        this.idCategoria = idCategoria;
+    public CategoriaProducto(String nombreCategoria, String descripcionCategoria) {
         this.nombreCategoria = nombreCategoria;
         this.descripcionCategoria = descripcionCategoria;
     }
