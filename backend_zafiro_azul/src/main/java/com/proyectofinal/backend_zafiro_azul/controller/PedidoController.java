@@ -16,34 +16,34 @@ public class PedidoController {
     private IPedidoService pedidoService;
 
     //Endpoint para obtener todos los pedidos
-    @GetMapping("/get")
+    @GetMapping("/traer")
     public List<Pedido> getPedido(){
         return pedidoService.getAllPedidos();
     }
 
     //Endpoint para obtener un pedido por id
-    @GetMapping("/get/{id}")
+    @GetMapping("/traer/{id}")
     public ResponseEntity<Pedido> findPedido(@PathVariable Long id){
         Pedido pedido = pedidoService.findPedido(id);
         return ResponseEntity.ok(pedido);
     }
 
     //Endpoint para crear un pedido
-    @PostMapping("/new")
+    @PostMapping("/crear")
     public String createPedido(@RequestBody Pedido pedido){
         pedidoService.createPedido(pedido);
         return "Su pedido ha sido creado";
     }
 
     //Endpoint para borrar un pedido
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/borrar/{id}")
     public String deletePedido(@PathVariable Long id){
         pedidoService.deletePedido(id);
         return "El pedido ha sido eliminado";
     }
 
     //Endpoint para modificar un pedido
-    @PutMapping("/update/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<String> updatePedido(
             @PathVariable Long id,
             @RequestBody Pedido pedidoUpdated

@@ -16,28 +16,28 @@ public class ProductoController {
     private IProductoService productoService;
 
     //Obtener todos los productos
-    @GetMapping("/get")
+    @GetMapping("/traer")
     public ResponseEntity<List<Producto>> getAllProductos() {
         List<Producto> productos = productoService.getAllProductos();
         return ResponseEntity.ok(productos);
     }
 
     //Obtener un producto por ID
-    @GetMapping("/get/{id}")
+    @GetMapping("/traer/{id}")
     public ResponseEntity<Producto> getProductoById(@PathVariable Long id) {
         Producto producto = productoService.findProducto(id);
         return ResponseEntity.ok(producto);
     }
 
     //Crear un nuevo producto
-    @PostMapping("/new")
+    @PostMapping("/crear")
     public ResponseEntity<String> createProducto(@RequestBody Producto producto) {
         productoService.createProducto(producto);
         return ResponseEntity.ok("Producto creado exitosamente");
     }
 
     //Actualizar un producto existente
-    @PutMapping("/update/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<String> updateProducto(@PathVariable Long id, @RequestBody Producto productoUpdated) {
         Producto productoExistente = productoService.findProducto(id);
         if (productoExistente != null) {
@@ -49,7 +49,7 @@ public class ProductoController {
     }
 
     //Eliminar un producto
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> deleteProducto(@PathVariable Long id) {
         Producto productoExistente = productoService.findProducto(id);
         if (productoExistente != null) {
