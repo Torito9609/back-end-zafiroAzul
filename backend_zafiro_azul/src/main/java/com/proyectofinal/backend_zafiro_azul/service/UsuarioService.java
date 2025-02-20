@@ -1,6 +1,5 @@
 package com.proyectofinal.backend_zafiro_azul.service;
 
-import com.proyectofinal.backend_zafiro_azul.model.Producto;
 import com.proyectofinal.backend_zafiro_azul.model.Usuario;
 import com.proyectofinal.backend_zafiro_azul.repository.IUsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +48,16 @@ public class UsuarioService implements IUsuarioService {
 
             usuarioRepository.save(usuarioToUpdate);
         }
+    }
+
+    @Override
+    public Usuario findByCorreo(String correoUsuario){
+        List<Usuario> usuarios = usuarioRepository.findAll();
+        for(Usuario usuario : usuarios){
+            if(usuario.getCorreoUsuario().equals(correoUsuario)){
+                return usuario;
+            }
+        }
+        return null;
     }
 }

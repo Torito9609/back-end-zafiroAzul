@@ -27,7 +27,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
-    //Crear un nuevo usuario
+    //Registro de un nuevo usuario
     @PostMapping("/new")
     public ResponseEntity<String> createUsuario(@RequestBody Usuario usuario) {
         usuarioService.createUsuario(usuario);
@@ -54,6 +54,18 @@ public class UsuarioController {
             usuarioService.deleteUsuario(id);
             return ResponseEntity.ok("Usuario eliminado exitosamente");
         } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    //Autenticar un usuario
+    @PostMapping("/login")
+    public ResponseEntity<String> loginUser(@RequestBody Usuario loginRequest){
+        Usuario usuario = usuarioService.findByCorreo(loginRequest.getCorreoUsuario());
+
+        if(usuario != null && usuario.getPasswordHash().equals(loginRequest.getPasswordHash())){
+            return ResponseEntity.ok("Ha iniciado sesión exitosamente");
+        }else{
             return ResponseEntity.notFound().build();
         }
     }
