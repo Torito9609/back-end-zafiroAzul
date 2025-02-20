@@ -15,27 +15,27 @@ public class UsuarioController {
     private IUsuarioService usuarioService;
 
     //Obtener todos los usuarios
-    @GetMapping("/get")
+    @GetMapping("/traer")
     public List<Usuario> getAllUsuarios() {
         return usuarioService.getAllUsuarios();
     }
 
     //Obtener un usuario por ID
-    @GetMapping("/get/{id}")
+    @GetMapping("/traer/{id}")
     public ResponseEntity<Usuario> findUsuario(@PathVariable Long id) {
         Usuario usuario = usuarioService.findUsuario(id);
         return ResponseEntity.ok(usuario);
     }
 
     //Registro de un nuevo usuario
-    @PostMapping("/new")
+    @PostMapping("/registrar")
     public ResponseEntity<String> createUsuario(@RequestBody Usuario usuario) {
         usuarioService.createUsuario(usuario);
         return ResponseEntity.ok("Usuario creado exitosamente");
     }
 
     //Actualizar un usuario existente
-    @PutMapping("/update/{id}")
+    @PutMapping("/editar/{id}")
     public ResponseEntity<String> updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioUpdated) {
         Usuario usuarioExistente = usuarioService.findUsuario(id);
         if (usuarioExistente != null) {
@@ -47,7 +47,7 @@ public class UsuarioController {
     }
 
     //Eliminar un usuario
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> deleteUsuario(@PathVariable Long id) {
         Usuario usuarioExistente = usuarioService.findUsuario(id);
         if (usuarioExistente != null) {
