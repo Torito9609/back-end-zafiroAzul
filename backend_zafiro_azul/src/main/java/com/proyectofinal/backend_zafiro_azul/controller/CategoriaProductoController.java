@@ -2,6 +2,7 @@ package com.proyectofinal.backend_zafiro_azul.controller;
 
 import com.proyectofinal.backend_zafiro_azul.model.CategoriaProducto;
 import com.proyectofinal.backend_zafiro_azul.service.ICategoriaProductoService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,21 +22,20 @@ public class CategoriaProductoController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<String> saveCategoria(@RequestBody CategoriaProducto categoriaProducto){
+    public ResponseEntity<?> saveCategoria(@Valid @RequestBody CategoriaProducto categoriaProducto) {
         categoriaProductoService.saveCategoriaProducto(categoriaProducto);
-        return ResponseEntity.ok("Categoría creada con éxito.");
+        return ResponseEntity.ok("{\"message\": \"Categoría creada exitosamente.\"}");
     }
 
     @DeleteMapping("/borrar/{id}")
     public ResponseEntity<String> deleteCategoria(@PathVariable Long id){
         categoriaProductoService.deleteCategoriaProducto(id);
-        return ResponseEntity.ok("La categoría se eliminó con éxito.");
+        return ResponseEntity.ok("{\"message\": \"Categoría eliminada exitosamente.\"}");
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editCategoria(@PathVariable Long id,
-                                                @RequestBody CategoriaProducto categoriaUpdated){
+    public ResponseEntity<?> editCategoria(@PathVariable Long id, @Valid @RequestBody CategoriaProducto categoriaUpdated) {
         categoriaProductoService.editCategoriaProducto(id, categoriaUpdated);
-        return ResponseEntity.ok("La categoría se editó con éxito.");
+        return ResponseEntity.ok("{\"message\": \"Categoría actualizada exitosamente.\"}");
     }
 }

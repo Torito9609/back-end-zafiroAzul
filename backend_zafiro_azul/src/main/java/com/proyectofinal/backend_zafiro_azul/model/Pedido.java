@@ -3,41 +3,63 @@ package com.proyectofinal.backend_zafiro_azul.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@Setter
+@Getter
 @Entity
 public class Pedido {
+    @Setter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPedido;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name= "idUsuario")
     @JsonIgnore
     private Usuario usuario;
 
+    @Setter
     @ManyToOne
     @JoinColumn(name = "idUsuarioTemp")
     @JsonIgnore
     private UsuarioTemporal usuarioTemp;
 
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "idEstadoPedido", nullable = false)
     @JsonIgnore
     private EstadoPedido estadoPedido;
 
+    @Setter
     @Temporal(TemporalType.TIMESTAMP)
+    @NotNull(message = "La fecha no puede estar vacía.")
+    @PastOrPresent(message = "La fecha no puede futura.")
     @Column(nullable = false)
     private Date fechaPedido;
 
+    @Setter
+    @DecimalMin(value = "0.01", message = "El total del pedido debe ser mayor a cero.")
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal totalPedido;
 
+    @Setter
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Size(message = "Un pedido debe tener al menos un detalle de pedido.")
+    @Valid
     private List<DetallePedido> detallesPedido;
 
     public Pedido(Date fechaPedido, Usuario usuario, EstadoPedido estadoPedido, BigDecimal totalPedido) {
@@ -74,56 +96,5 @@ public class Pedido {
         if (usuario == null && usuarioTemp == null) {
             throw new IllegalArgumentException("El pedido debe tener un usuario registrado o un usuario temporal.");
         }
-    }
-
-
-    public Date getFechaPedido() {return fechaPedido;}
-
-    public void setFechaPedido(Date fechaPedido) {
-        this.fechaPedido = fechaPedido;
-    }
-
-    public Long getIdPedido() {
-        return idPedido;
-    }
-
-    public void setIdPedido(Long idPedido) {
-        this.idPedido = idPedido;
-    }
-
-    public Usuario getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public UsuarioTemporal getUsuarioTemp() {
-        return usuarioTemp;
-    }
-
-    public void setUsuarioTemp(UsuarioTemporal usuarioTemp) {
-        this.usuarioTemp = usuarioTemp;
-    }
-
-    public EstadoPedido getEstadoPedido(){return estadoPedido;}
-
-    private void setEstadoPedido(EstadoPedido estadoPedido){this.estadoPedido = estadoPedido;}
-
-    public BigDecimal getTotalPedido() {
-        return totalPedido;
-    }
-
-    public void setTotalPedido(BigDecimal totalPedido) {
-        this.totalPedido = totalPedido;
-    }
-
-    public List<DetallePedido> getDetallesPedido() {
-        return detallesPedido;
-    }
-
-    public void setDetallesPedido(List<DetallePedido> detallesPedido) {
-        this.detallesPedido = detallesPedido;
     }
 }

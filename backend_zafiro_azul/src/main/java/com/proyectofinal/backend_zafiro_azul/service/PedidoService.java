@@ -5,6 +5,7 @@ import com.proyectofinal.backend_zafiro_azul.repository.IPedidoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,6 +16,10 @@ public class PedidoService implements IPedidoService{
 
     @Override
     public List<Pedido> getAllPedidos() {
+        boolean listaPedidosVacia = pedidoRepository.findAll().isEmpty();
+        if(listaPedidosVacia){
+            return new ArrayList<>();
+        }
         return pedidoRepository.findAll();
     }
 
