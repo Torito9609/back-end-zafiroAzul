@@ -58,11 +58,11 @@ public class DetallePedido {
         this.pedido = pedido;
     }
 
-    public VarianteProducto getIdVariante() {
+    public VarianteProducto getVariante() {
         return varianteProducto;
     }
 
-    public void setIdVariante(VarianteProducto varianteProducto) {
+    public void setVariante(VarianteProducto varianteProducto) {
         this.varianteProducto = varianteProducto;
     }
 
