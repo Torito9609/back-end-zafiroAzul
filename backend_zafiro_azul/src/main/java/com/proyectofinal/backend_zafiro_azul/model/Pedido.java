@@ -1,6 +1,7 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -11,19 +12,22 @@ import java.util.List;
 @Entity
 public class Pedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPedido;
 
     @ManyToOne
     @JoinColumn(name= "idUsuario")
+    @JsonIgnore
     private Usuario usuario;
 
     @ManyToOne
     @JoinColumn(name = "idUsuarioTemp")
+    @JsonIgnore
     private UsuarioTemporal usuarioTemp;
 
     @ManyToOne
     @JoinColumn(name = "idEstadoPedido", nullable = false)
+    @JsonIgnore
     private EstadoPedido estadoPedido;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -34,7 +38,7 @@ public class Pedido {
     private BigDecimal totalPedido;
 
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<DetallePedido> pedidos;
+    private List<DetallePedido> detallesPedido;
 
     public Pedido(Date fechaPedido, Usuario usuario, EstadoPedido estadoPedido, BigDecimal totalPedido) {
         if (usuario == null) {
@@ -115,11 +119,11 @@ public class Pedido {
         this.totalPedido = totalPedido;
     }
 
-    public List<DetallePedido> getPedidos() {
-        return pedidos;
+    public List<DetallePedido> getDetallesPedido() {
+        return detallesPedido;
     }
 
-    public void setPedidos(List<DetallePedido> pedidos) {
-        this.pedidos = pedidos;
+    public void setDetallesPedido(List<DetallePedido> detallesPedido) {
+        this.detallesPedido = detallesPedido;
     }
 }

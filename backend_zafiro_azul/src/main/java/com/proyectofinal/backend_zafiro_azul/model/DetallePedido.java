@@ -1,5 +1,6 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import org.aspectj.weaver.ast.Var;
 
@@ -8,11 +9,12 @@ import java.math.BigDecimal;
 @Entity
 public class DetallePedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDetalle;
 
     @ManyToOne
     @JoinColumn(name = "idPedido", nullable = false)
+    @JsonIgnore
     private Pedido pedido;
 
     @ManyToOne

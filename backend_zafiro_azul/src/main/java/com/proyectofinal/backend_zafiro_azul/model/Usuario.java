@@ -8,7 +8,7 @@ import java.util.List;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
 
     @Column(nullable = false)
@@ -29,16 +29,17 @@ public class Usuario {
     @Column(nullable = false)
     private String passwordSalt;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pedido> pedidos;
 
-    public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String direccionUsuario, String passwordHash, String passwordSalt) {
+    public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String direccionUsuario, String passwordHash, String passwordSalt, List<Pedido> pedidos) {
         this.nombreUsuario = nombreUsuario;
         this.correoUsuario = correoUsuario;
         this.telefonoUsuario = telefonoUsuario;
         this.direccionUsuario = direccionUsuario;
         this.passwordHash = passwordHash;
         this.passwordSalt = passwordSalt;
+        this.pedidos = pedidos;
     }
 
     public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String passwordHash, String passwordSalt) {

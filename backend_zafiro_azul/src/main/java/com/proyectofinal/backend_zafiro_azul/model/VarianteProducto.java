@@ -1,6 +1,7 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
@@ -9,11 +10,12 @@ import java.util.List;
 @Entity
 public class VarianteProducto {
     @Id
-    @GeneratedValue (strategy = GenerationType.SEQUENCE)
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long idVariante;
 
     @ManyToOne
     @JoinColumn(name = "idProducto", nullable = false)
+    @JsonIgnore
     private Producto producto;
 
     @Column(name = "TAMANO_VARIANTE", nullable = false)
@@ -26,6 +28,7 @@ public class VarianteProducto {
     private int stockVariante;
 
     @OneToMany(mappedBy = "varianteProducto")
+    @JsonIgnore
     private List<DetallePedido> detallePedidos;
 
 
