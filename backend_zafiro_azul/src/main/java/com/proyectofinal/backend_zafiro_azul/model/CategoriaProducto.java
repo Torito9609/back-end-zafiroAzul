@@ -7,7 +7,7 @@ import java.util.List;
 @Entity
 public class CategoriaProducto {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idCategoria;
 
     @Column(nullable = false)

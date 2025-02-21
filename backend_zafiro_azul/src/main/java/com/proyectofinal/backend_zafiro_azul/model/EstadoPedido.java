@@ -1,5 +1,6 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -7,13 +8,14 @@ import java.util.List;
 @Entity
 public class EstadoPedido {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEstado;
 
     @Column(nullable = false)
     private String nombreEstado;
 
     @OneToMany(mappedBy = "estadoPedido", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Pedido> pedidos;
 
     public EstadoPedido(Long idEstado, String nombreEstado) {
