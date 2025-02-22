@@ -60,4 +60,18 @@ public class UsuarioService implements IUsuarioService {
         }
         return null;
     }
+
+    @Override
+    public Usuario loginUsuario(Usuario usuario){
+        String correoUsuario = usuario.getCorreoUsuario();
+        String password = usuario.getPasswordHash();
+        Usuario dbGetUsuario = findByCorreo(correoUsuario);
+
+        if(dbGetUsuario != null){
+            if (dbGetUsuario.getCorreoUsuario().equals(correoUsuario) && dbGetUsuario.getPasswordHash().equals(password)){
+                return dbGetUsuario;
+            }
+        }
+        return null;
+    }
 }

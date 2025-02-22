@@ -27,9 +27,20 @@ public class UsuarioController {
         return ResponseEntity.ok(usuario);
     }
 
+    //Obtener un usuario por Correo
+    @GetMapping("/traer/correo")
+    public ResponseEntity<Usuario> findUsuarioPorCorreo(@RequestParam String correo) {
+        Usuario usuario = usuarioService.findByCorreo(correo);
+        if(usuario == null){
+            return ResponseEntity.ok(new Usuario());
+        }
+        return ResponseEntity.ok(usuario);
+    }
+
     //Registro de un nuevo usuario
     @PostMapping("/registrar")
     public ResponseEntity<String> createUsuario(@RequestBody Usuario usuario) {
+        System.out.println(usuario.getNombreUsuario());
         usuarioService.createUsuario(usuario);
         return ResponseEntity.ok("Usuario creado exitosamente");
     }
@@ -60,13 +71,12 @@ public class UsuarioController {
 
     //Autenticar un usuario
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody Usuario loginRequest){
-        Usuario usuario = usuarioService.findByCorreo(loginRequest.getCorreoUsuario());
+    public ResponseEntity<Usuario> loginUser(@RequestBody Usuario usuarioJson){
+        Usuario usuario = usuarioService.loginUsuario(usuarioJson);
 
-        if(usuario != null && usuario.getPasswordHash().equals(loginRequest.getPasswordHash())){
-            return ResponseEntity.ok("Ha iniciado sesión exitosamente");
-        }else{
-            return ResponseEntity.notFound().build();
+        if(usuario != null){
+            return ResponseEntity.ok(usuario);
         }
+        return ResponseEntity.ok(new Usuario());
     }
 }
