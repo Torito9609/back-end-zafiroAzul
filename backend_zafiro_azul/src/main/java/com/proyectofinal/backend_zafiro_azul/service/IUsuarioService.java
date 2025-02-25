@@ -18,4 +18,6 @@ public interface IUsuarioService {
     void updateUsuario(Long idUsuarioToUpdate, Usuario usuarioUpdated);
 
     Usuario findByCorreo(String correoUsuario);
+
+    Usuario loginUsuario (Usuario usuario);
 }
