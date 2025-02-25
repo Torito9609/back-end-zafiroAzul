@@ -8,11 +8,9 @@ import lombok.Setter;
 
 import java.util.List;
 
-@Setter
-@Getter
+
 @Entity
 public class CategoriaProducto {
-    @Getter
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long idCategoria;
@@ -22,8 +20,6 @@ public class CategoriaProducto {
     @Column(nullable = false, unique = true)
     String nombreCategoria;
 
-    @Getter
-    @Setter
     @NotBlank(message = "La descripción de la categoría no puede estar vacía")
     @Size(max = 255, message = "La descripción de la categoría no debe superar los 255 caracteres")
     @Column(nullable = false)
@@ -38,4 +34,36 @@ public class CategoriaProducto {
     }
 
     public CategoriaProducto() {}
+
+    public Long getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
+
+    public String getNombreCategoria() {
+        return nombreCategoria;
+    }
+
+    public void setNombreCategoria(String nombreCategoria) {
+        this.nombreCategoria = nombreCategoria;
+    }
+
+    public String getDescripcionCategoria() {
+        return descripcionCategoria;
+    }
+
+    public void setDescripcionCategoria(String descripcionCategoria) {
+        this.descripcionCategoria = descripcionCategoria;
+    }
+
+    public List<Producto> getProductos() {
+        return productos;
+    }
+
+    public void setProductos(List<Producto> productos) {
+        this.productos = productos;
+    }
 }

@@ -5,13 +5,10 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import lombok.Getter;
-import lombok.Setter;
-import org.aspectj.weaver.ast.Var;
+
 
 import java.math.BigDecimal;
-@Setter
-@Getter
+
 @Entity
 public class DetallePedido {
     @Id
@@ -54,6 +51,54 @@ public class DetallePedido {
 
     public DetallePedido() {}
 
+    public Long getIdDetalle() {
+        return idDetalle;
+    }
+
+    public void setIdDetalle(Long idDetalle) {
+        this.idDetalle = idDetalle;
+    }
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
+    public VarianteProducto getVarianteProducto() {
+        return varianteProducto;
+    }
+
+    public void setVarianteProducto(VarianteProducto varianteProducto) {
+        this.varianteProducto = varianteProducto;
+    }
+
+    public Integer getCantidadVariante() {
+        return cantidadVariante;
+    }
+
+    public void setCantidadVariante(Integer cantidadVariante) {
+        this.cantidadVariante = cantidadVariante;
+    }
+
+    public BigDecimal getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(BigDecimal precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public BigDecimal getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(BigDecimal subTotal) {
+        this.subTotal = subTotal;
+    }
+
     public VarianteProducto getVariante() {
         return varianteProducto;
     }
@@ -61,5 +106,7 @@ public class DetallePedido {
     public void setVariante(VarianteProducto varianteProducto) {
         this.varianteProducto = varianteProducto;
     }
+
+
 
 }

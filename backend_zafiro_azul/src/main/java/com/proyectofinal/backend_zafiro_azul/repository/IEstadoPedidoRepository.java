@@ -4,5 +4,5 @@ import com.proyectofinal.backend_zafiro_azul.model.EstadoPedido;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IEstadoPedidoRepository extends JpaRepository<EstadoPedido, Long> {
-    boolean existsByNombreEstadoAndIdNot(String nombreEstado, Long id);
+    boolean existsByNombreEstadoAndIdEstadoNot(String nombreEstado, Long id);
 }

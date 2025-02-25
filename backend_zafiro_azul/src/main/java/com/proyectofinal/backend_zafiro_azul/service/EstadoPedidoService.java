@@ -28,7 +28,7 @@ public class EstadoPedidoService implements IEstadoPedidoService{
     @Transactional
     @Override
     public void saveEstadoPedido(EstadoPedido estadoPedido) throws EntityConflictException{
-        boolean nombreDuplicado = estadoPedidoRepository.existsByNombreEstadoAndIdNot(
+        boolean nombreDuplicado = estadoPedidoRepository.existsByNombreEstadoAndIdEstadoNot(
                 estadoPedido.getNombreEstado(), estadoPedido.getIdEstado());
         if(nombreDuplicado){
             throw new EntityConflictException("Categoría de producto", "nombre", estadoPedido.getNombreEstado());
@@ -61,7 +61,7 @@ public class EstadoPedidoService implements IEstadoPedidoService{
         EstadoPedido estadoExistente = estadoPedidoRepository.findById(idEstadoPedidoToUpdate).orElseThrow(()->
                 new EstadoPedidoNotFoundException(idEstadoPedidoToUpdate));
 
-        boolean nombreDuplicado = estadoPedidoRepository.existsByNombreEstadoAndIdNot(estadoPedidoUpdated.getNombreEstado(),
+        boolean nombreDuplicado = estadoPedidoRepository.existsByNombreEstadoAndIdEstadoNot(estadoPedidoUpdated.getNombreEstado(),
                 idEstadoPedidoToUpdate);
             if(nombreDuplicado){
                 throw new EntityConflictException("estado pedido", "nombre", estadoPedidoUpdated.getNombreEstado());

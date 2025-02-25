@@ -28,7 +28,7 @@ public class CategoriaProductoService implements ICategoriaProductoService{
     @Transactional
     @Override
     public void saveCategoriaProducto(CategoriaProducto categoriaProducto) throws EntityConflictException{
-        boolean nombreDuplicado = categoriaProductoRepository.existsByNombreCategoriaAndIdNot(
+        boolean nombreDuplicado = categoriaProductoRepository.existsByNombreCategoriaAndIdCategoriaNot(
                 categoriaProducto.getNombreCategoria(), categoriaProducto.getIdCategoria());
         if(nombreDuplicado)
             throw new EntityConflictException("Categoría de producto", "nombre", categoriaProducto.getNombreCategoria());
@@ -47,9 +47,6 @@ public class CategoriaProductoService implements ICategoriaProductoService{
 
     @Override
     public CategoriaProducto findCategoriaProducto(Long id_categoria) throws CategoriaProductoNotFoundException {
-        if(!categoriaProductoRepository.existsById(id_categoria)){
-            throw new CategoriaProductoNotFoundException(id_categoria);
-        }
         return categoriaProductoRepository.findById(id_categoria).orElseThrow(()->new
                 CategoriaProductoNotFoundException(id_categoria));
     }
@@ -62,7 +59,7 @@ public class CategoriaProductoService implements ICategoriaProductoService{
                 new CategoriaProductoNotFoundException(idCategoriaToUpdate));
 
         //Verificar si existe nombre de categoría duplicado.
-        boolean nombreDuplicado = categoriaProductoRepository.existsByNombreCategoriaAndIdNot(
+        boolean nombreDuplicado = categoriaProductoRepository.existsByNombreCategoriaAndIdCategoriaNot(
                 categoriaUpdated.getNombreCategoria(), idCategoriaToUpdate);
         if(nombreDuplicado){
             throw new EntityConflictException("Categoría de producto", "nombre", categoriaUpdated.getNombreCategoria());

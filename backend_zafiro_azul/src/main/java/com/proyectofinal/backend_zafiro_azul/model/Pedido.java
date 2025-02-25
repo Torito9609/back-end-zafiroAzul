@@ -8,55 +8,50 @@ import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
-@Setter
-@Getter
+
 @Entity
 public class Pedido {
-    @Setter
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPedido;
 
-    @Setter
+
     @ManyToOne
     @JoinColumn(name= "idUsuario")
     @JsonIgnore
     private Usuario usuario;
 
-    @Setter
+
     @ManyToOne
     @JoinColumn(name = "idUsuarioTemp")
     @JsonIgnore
     private UsuarioTemporal usuarioTemp;
 
-    @Getter
-    @Setter
+
     @ManyToOne
     @JoinColumn(name = "idEstadoPedido", nullable = false)
     @JsonIgnore
     private EstadoPedido estadoPedido;
 
-    @Setter
+
     @Temporal(TemporalType.TIMESTAMP)
     @NotNull(message = "La fecha no puede estar vacía.")
     @PastOrPresent(message = "La fecha no puede futura.")
     @Column(nullable = false)
     private Date fechaPedido;
 
-    @Setter
+
     @DecimalMin(value = "0.01", message = "El total del pedido debe ser mayor a cero.")
     @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal totalPedido;
 
-    @Setter
+
     @OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
     @Size(message = "Un pedido debe tener al menos un detalle de pedido.")
     @Valid
@@ -87,14 +82,59 @@ public class Pedido {
     public Pedido() {
     }
 
-    @PrePersist
-    @PreUpdate
-    private void validarUsuario() {
-        if (usuario != null && usuarioTemp != null) {
-            throw new IllegalArgumentException("El pedido no puede tener un usuario registrado y un usuario temporal al mismo tiempo.");
-        }
-        if (usuario == null && usuarioTemp == null) {
-            throw new IllegalArgumentException("El pedido debe tener un usuario registrado o un usuario temporal.");
-        }
+    public Long getIdPedido() {
+        return idPedido;
+    }
+
+    public void setIdPedido(Long idPedido) {
+        this.idPedido = idPedido;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
+    }
+
+    public UsuarioTemporal getUsuarioTemp() {
+        return usuarioTemp;
+    }
+
+    public void setUsuarioTemp(UsuarioTemporal usuarioTemp) {
+        this.usuarioTemp = usuarioTemp;
+    }
+
+    public EstadoPedido getEstadoPedido() {
+        return estadoPedido;
+    }
+
+    public void setEstadoPedido(EstadoPedido estadoPedido) {
+        this.estadoPedido = estadoPedido;
+    }
+
+    public Date getFechaPedido() {
+        return fechaPedido;
+    }
+
+    public void setFechaPedido(Date fechaPedido) {
+        this.fechaPedido = fechaPedido;
+    }
+
+    public BigDecimal getTotalPedido() {
+        return totalPedido;
+    }
+
+    public void setTotalPedido(BigDecimal totalPedido) {
+        this.totalPedido = totalPedido;
+    }
+
+    public List<DetallePedido> getDetallesPedido() {
+        return detallesPedido;
+    }
+
+    public void setDetallesPedido(List<DetallePedido> detallesPedido) {
+        this.detallesPedido = detallesPedido;
     }
 }

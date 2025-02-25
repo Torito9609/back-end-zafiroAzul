@@ -35,7 +35,6 @@ public class Producto {
     }
 
     public Producto(){
-
     }
 
     public Long getIdProducto() {
@@ -69,4 +68,6 @@ public class Producto {
     public List<CategoriaProducto> getCategorias() {return categorias;}
 
     public void setCategorias(List<CategoriaProducto> categorias) {this.categorias = categorias;}
+
+
 }

@@ -1,8 +1,6 @@
 package com.proyectofinal.backend_zafiro_azul.exception;
 
-import lombok.Getter;
 
-@Getter
 public class CategoriaProductoNotFoundException extends RuntimeException {
     private Long idCategoria;  // Puedes incluir detalles adicionales si quieres
 
@@ -11,4 +9,11 @@ public class CategoriaProductoNotFoundException extends RuntimeException {
         this.idCategoria = idCategoria;
     }
 
+    public Long getIdCategoria() {
+        return idCategoria;
+    }
+
+    public void setIdCategoria(Long idCategoria) {
+        this.idCategoria = idCategoria;
+    }
 }

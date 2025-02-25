@@ -90,4 +90,8 @@ public class VarianteProducto {
     public void setVariantes(List<DetallePedido> detallePedidos) {
         this.detallePedidos = detallePedidos;
     }
+
+    public void setDetallePedidos(List<DetallePedido> detallePedidos) {
+        this.detallePedidos = detallePedidos;
+    }
 }

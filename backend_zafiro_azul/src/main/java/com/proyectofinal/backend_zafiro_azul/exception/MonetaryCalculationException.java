@@ -1,11 +1,8 @@
 package com.proyectofinal.backend_zafiro_azul.exception;
 
-import lombok.Getter;
-import lombok.Setter;
 
 import java.math.BigDecimal;
-@Getter
-@Setter
+
 public class MonetaryCalculationException extends RuntimeException {
     private final String tipoCalculo;
     private final String entidad;
@@ -16,5 +13,17 @@ public class MonetaryCalculationException extends RuntimeException {
         this.tipoCalculo = tipoCalculo;
         this.entidad = entidad;
         this.valorEsperado = valorEsperado;
+    }
+
+    public String getTipoCalculo() {
+        return tipoCalculo;
+    }
+
+    public String getEntidad() {
+        return entidad;
+    }
+
+    public BigDecimal getValorEsperado() {
+        return valorEsperado;
     }
 }

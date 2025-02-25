@@ -1,7 +1,11 @@
 package com.proyectofinal.backend_zafiro_azul.service;
 
+import com.proyectofinal.backend_zafiro_azul.exception.DetallePedidoNotFoundException;
+import com.proyectofinal.backend_zafiro_azul.exception.EntityConflictException;
+import com.proyectofinal.backend_zafiro_azul.exception.PedidoNotFoundException;
 import com.proyectofinal.backend_zafiro_azul.model.Pedido;
 import com.proyectofinal.backend_zafiro_azul.repository.IPedidoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,7 @@ public class PedidoService implements IPedidoService{
         return pedidoRepository.findAll();
     }
 
+    @Transactional
     @Override
     public void createPedido(Pedido pedido) {
         validarPedido(pedido);
@@ -35,19 +40,18 @@ public class PedidoService implements IPedidoService{
     }
 
     @Override
-    public Pedido findPedido(Long idPedido) {
-        return pedidoRepository.findById(idPedido).orElse(null);
+    public Pedido findPedido(Long idPedido) throws PedidoNotFoundException {
+        return pedidoRepository.findById(idPedido).orElseThrow(()-> new PedidoNotFoundException(idPedido));
     }
 
     @Override
-    public void updatePedido(Long idPedidoToUpdate, Pedido pedidoUpdated) {
-        Pedido pedidoToUpdate = pedidoRepository.findById(idPedidoToUpdate).orElse(null);
-        if(pedidoToUpdate != null){
-            pedidoToUpdate.setFechaPedido(pedidoUpdated.getFechaPedido());
-            pedidoToUpdate.setTotalPedido(pedidoUpdated.getTotalPedido());
+    public void updatePedido(Long idPedidoToUpdate, Pedido pedidoUpdated) throws PedidoNotFoundException{
+        Pedido pedidoToUpdate = pedidoRepository.findById(idPedidoToUpdate).orElseThrow(()->
+                new PedidoNotFoundException(idPedidoToUpdate));
 
-            pedidoRepository.save(pedidoToUpdate);
-        }
+        pedidoToUpdate.setFechaPedido(pedidoUpdated.getFechaPedido());
+        pedidoToUpdate.setTotalPedido(pedidoUpdated.getTotalPedido());
+        pedidoRepository.save(pedidoToUpdate);
     }
 
     @Override
