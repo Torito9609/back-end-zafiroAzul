@@ -1,5 +1,6 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -26,6 +27,7 @@ public class CategoriaProducto {
     String descripcionCategoria;
 
     @ManyToMany(mappedBy = "categorias", cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Producto> productos;
 
     public CategoriaProducto(String nombreCategoria, String descripcionCategoria) {

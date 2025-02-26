@@ -38,12 +38,13 @@ public class UsuarioController {
     }
 
     //Registro de un nuevo usuario
+    /*
     @PostMapping("/registrar")
     public ResponseEntity<String> createUsuario(@RequestBody Usuario usuario) {
         System.out.println(usuario.getNombreUsuario());
         usuarioService.createUsuario(usuario);
         return ResponseEntity.ok("Usuario creado exitosamente");
-    }
+    }*/
 
     //Actualizar un usuario existente
     @PutMapping("/editar/{id}")
@@ -70,6 +71,7 @@ public class UsuarioController {
     }
 
     //Autenticar un usuario
+    /*
     @PostMapping("/login")
     public ResponseEntity<Usuario> loginUser(@RequestBody Usuario usuarioJson){
         Usuario usuario = usuarioService.loginUsuario(usuarioJson);
@@ -78,5 +80,5 @@ public class UsuarioController {
             return ResponseEntity.ok(usuario);
         }
         return ResponseEntity.ok(new Usuario());
-    }
+    }*/
 }

@@ -44,7 +44,7 @@ public class UsuarioService implements IUsuarioService {
             usuarioToUpdate.setTelefonoUsuario(usuarioUpdated.getTelefonoUsuario());
             usuarioToUpdate.setCorreoUsuario(usuarioUpdated.getCorreoUsuario());
             usuarioToUpdate.setDireccionUsuario(usuarioUpdated.getDireccionUsuario());
-            usuarioToUpdate.setPasswordHash(usuarioUpdated.getPasswordHash());
+            usuarioToUpdate.setPassword(usuarioUpdated.getPassword());
 
             usuarioRepository.save(usuarioToUpdate);
         }
@@ -64,11 +64,11 @@ public class UsuarioService implements IUsuarioService {
     @Override
     public Usuario loginUsuario(Usuario usuario){
         String correoUsuario = usuario.getCorreoUsuario();
-        String password = usuario.getPasswordHash();
+        String password = usuario.getPassword();
         Usuario dbGetUsuario = findByCorreo(correoUsuario);
 
         if(dbGetUsuario != null){
-            if (dbGetUsuario.getCorreoUsuario().equals(correoUsuario) && dbGetUsuario.getPasswordHash().equals(password)){
+            if (dbGetUsuario.getCorreoUsuario().equals(correoUsuario) && dbGetUsuario.getPassword().equals(password)){
                 return dbGetUsuario;
             }
         }

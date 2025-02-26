@@ -1,11 +1,15 @@
 package com.proyectofinal.backend_zafiro_azul.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.List;
-
 @Entity
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,43 +21,49 @@ public class Usuario {
     @Column(nullable = false)
     private String telefonoUsuario;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String correoUsuario;
 
     @Column(nullable = true)
     private String direccionUsuario;
 
     @Column(nullable = false)
-    private String passwordHash;
+    private String password;
 
-    @Column(nullable = false)
-    private String passwordSalt;
+    Role rol;
 
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pedido> pedidos;
 
-    public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String direccionUsuario, String passwordHash, String passwordSalt, List<Pedido> pedidos) {
+    public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String direccionUsuario, String password, List<Pedido> pedidos, Role rol) {
         this.nombreUsuario = nombreUsuario;
         this.correoUsuario = correoUsuario;
         this.telefonoUsuario = telefonoUsuario;
         this.direccionUsuario = direccionUsuario;
-        this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
+        this.password = password;
+        this.rol = rol;
         this.pedidos = pedidos;
     }
 
-    public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String passwordHash, String passwordSalt) {
+    public Usuario(String nombreUsuario, String correoUsuario, String telefonoUsuario, String password, Role rol) {
         this.nombreUsuario = nombreUsuario;
         this.correoUsuario = correoUsuario;
         this.telefonoUsuario = telefonoUsuario;
-        this.passwordHash = passwordHash;
-        this.passwordSalt = passwordSalt;
+        this.password = password;
+        this.rol = rol;
         this.direccionUsuario = null;
     }
 
     public Usuario() {
     }
 
+    public Role getRol() {
+        return rol;
+    }
+
+    public void setRol(Role rol) {
+        this.rol = rol;
+    }
 
     public String getCorreoUsuario() {
         return correoUsuario;
@@ -87,20 +97,8 @@ public class Usuario {
         this.nombreUsuario = nombreUsuario;
     }
 
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
-        this.passwordHash = passwordHash;
-    }
-
-    public String getPasswordSalt() {
-        return passwordSalt;
-    }
-
-    public void setPasswordSalt(String passwordSalt) {
-        this.passwordSalt = passwordSalt;
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getTelefonoUsuario() {
@@ -119,4 +117,38 @@ public class Usuario {
         this.pedidos = pedidos;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(rol.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public String getUsername() {
+        return correoUsuario;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
