@@ -33,7 +33,8 @@ public class SecurityConfig {
                         authRequest
                                 .requestMatchers(
                                         "/auth/**",
-                                        "/productos/traer/**")
+                                        "/productos/traer/**",
+                                        "/categorias/traer/**")
                                 .permitAll()
                                 .anyRequest().authenticated()
                 )
