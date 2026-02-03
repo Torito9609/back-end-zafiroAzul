@@ -13,11 +13,11 @@ Proyecto de práctica para aprender los fundamentos de Spring Boot construyendo 
 - Java
 - Spring Boot (REST)
 - MySQL (local)
-- Maven/Gradle (según el proyecto)
+- Maven
 
 ## Cómo ejecutar (guía general)
 1. Configura la BD en MySQL (schema/usuario)
-2. Ajusta `application.properties` / `application.yml`:
+2. Ajusta `application.properties`:
    - URL
    - usuario
    - contraseña
